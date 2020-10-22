@@ -30,6 +30,10 @@ const posts = {
         async createPost(_, { body }, context) {
             const user = checkAuth(context);
 
+            if(args.body.trim() == "") {
+                throw new Error("Post body must not be empty");
+            }
+
             const newPost = new Post({
                 body,
                 user: user.id,
@@ -38,6 +42,10 @@ const posts = {
             })
 
             const post = await newPost.save();
+
+            context.pubsub.publish("NEW_POST", {
+                newPost: post
+            })
 
             return post;
         },
@@ -74,6 +82,13 @@ const posts = {
                 return post;
             } else {
                 throw new UserInputError("Post not found");
+            }
+        }
+    },
+    Subscription: {
+        newPost: {
+            subscribe: (_, __, { pubsub }) => {
+                return pubsub.asyncIterator("NEW_POST");
             }
         }
     }
