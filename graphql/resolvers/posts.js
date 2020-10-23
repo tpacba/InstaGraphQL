@@ -8,6 +8,7 @@ const posts = {
         async getPosts() {
             try{
                 const posts = await Post.find().sort({ createdAt: -1});
+                console.log(posts);
                 return posts;
             } catch(err) {
                 throw new Error(err);
@@ -17,6 +18,7 @@ const posts = {
             try{
                 const post = await Post.findById(postId);
                 if(post) {
+                    console.log(post);
                     return post;
                 } else {
                     throw new Error("Post is not found!");
@@ -30,7 +32,7 @@ const posts = {
         async createPost(_, { body }, context) {
             const user = checkAuth(context);
 
-            if(args.body.trim() == "") {
+            if(body.trim() == "") {
                 throw new Error("Post body must not be empty");
             }
 
