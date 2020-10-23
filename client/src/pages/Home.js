@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Container } from 'semantic-ui-react';
 import PostCard from '../components/PostCard';
 
 const FETCH_POSTS_QUERY = gql`
@@ -32,10 +32,8 @@ const Home = () => {
 
     return (
         <Grid columns={3}>
-            <Grid.Row>
-                <Grid.Column>
-                    <h1>Recent Posts</h1>
-                </Grid.Column>
+            <Grid.Row >
+                <Container textAlign='center'><h1>Recent Posts</h1></Container>
             </Grid.Row>
             <Grid.Row>
                 {loading ? (
