@@ -30,7 +30,7 @@ const REGISTER_USER = gql`
 const Register = (props) => {
     const [errors, setErrors] = useState({});
 
-    const { onChange, onSubmit, values } = useForm(registerUser, {
+    const { onChange, onSubmit, values } = useForm(addUserCallback, {
         username: "",
         email: "",
         password: "",
@@ -48,7 +48,7 @@ const Register = (props) => {
         variables: values
     })
 
-    function registerUser() {
+    function addUserCallback() {
         addUser();
     }
 
