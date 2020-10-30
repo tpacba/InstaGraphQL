@@ -4,6 +4,13 @@ const postSchema = new Schema({
     body: String,
     username: String,
     createdAt: String,
+    files: [
+        {
+            filename: String,
+            mimetype: String,
+            encoding: String
+        }
+    ],
     comments: [
         {
             body: String,
