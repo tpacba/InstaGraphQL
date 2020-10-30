@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useForm } from '../util/hooks';
 import { gql, useMutation } from '@apollo/client';
+import { FETCH_POSTS_QUERY } from '../util/graphql';
 
 const CREATE_POST_MUTATION = gql`
     mutation createPost($body: String!) {
@@ -33,9 +34,29 @@ function PostForm() {
     });
 
     const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
-        update(_, result) {
+        update(proxy, result) {
+            console.log(proxy);
             console.log(result);
+            const data = proxy.readQuery({
+                query: FETCH_POSTS_QUERY
+            });
+
+            console.log(data);
+
+            const newData = {getPosts: []}
+            newData.getPosts = [result.data.createPost, ...data.getPosts];
+            // data.getPosts.unshift(result.data.createPost);
+
+            console.log(newData);
+
+            proxy.writeQuery({
+                query: FETCH_POSTS_QUERY,
+                newData
+            })
+            
+            console.log(proxy)
             values.body = "";
+            window.location.reload(false);
         },
         variables: values
     });
@@ -45,6 +66,7 @@ function PostForm() {
     }
 
     return (
+        <>
         <Form onSubmit={onSubmit}>
             <h2>Create a Post</h2>
             <Form.Field>
@@ -53,6 +75,7 @@ function PostForm() {
                     name="body"
                     onChange={onChange}
                     value={values.body}
+                    error={error ? true : false}
                 ></Form.Input>
                 <Button
                     type="submit"
@@ -60,6 +83,14 @@ function PostForm() {
                 >Submit</Button>
             </Form.Field>
         </Form>
+        {error && (
+            <div className="ui error message">
+                <ul className="list">
+                    <li>{error.graphQLErrors[0].message}</li>
+                </ul>
+            </div>
+        )}
+        </>
     );
 }
 
