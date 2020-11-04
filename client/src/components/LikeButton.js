@@ -27,7 +27,11 @@ const LikeButton = ({ user, post: { id, likes, likeCount } }) => {
         }
     }, [user, likes]);
 
-    const [likePost] = useMutation(LIKE_POST_MUTATION, {
+    const [likePost, {error}] = useMutation(LIKE_POST_MUTATION, {
+        onError(err) {
+            window.location = "/login";
+            return err;
+        },
         variables: { postId: id }
     });
 

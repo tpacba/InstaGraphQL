@@ -10,6 +10,10 @@ const PostCard = ({ post: { id, body, createdAt, username, comments, likes, like
 
     const { user } = useContext(AuthContext);
 
+    const deletePostCallback = () => {
+        window.location = "/";
+    }
+
     return (
         <Card fluid>
             <Card.Content>
@@ -38,7 +42,7 @@ const PostCard = ({ post: { id, body, createdAt, username, comments, likes, like
                     </Label>
                 </Button>
                 {user && user.username === username && (
-                    <DeleteButton postId={id}></DeleteButton>
+                    <DeleteButton postId={id} callback={deletePostCallback}></DeleteButton>
                 )}
             </Card.Content>
         </Card>

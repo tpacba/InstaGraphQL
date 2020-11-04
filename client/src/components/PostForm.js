@@ -58,6 +58,9 @@ function PostForm() {
             values.body = "";
             window.location.reload(false);
         },
+        onError(err) {
+            return err;
+        },
         variables: values
     });
 

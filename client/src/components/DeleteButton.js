@@ -56,7 +56,7 @@ const DeleteButton = ({ postId, commentId, callback }) => {
                 })
             }
 
-            window.location.reload(false);
+            // window.location.reload(false);
 
             if (callback) {
                 callback();

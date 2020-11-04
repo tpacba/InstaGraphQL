@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import { Dimmer, Loader, Grid, Image, Card, Button, Icon, Label } from "semantic-ui-react";
+import { Dimmer, Loader, Grid, Image, Card, Button, Icon, Label, Form } from "semantic-ui-react";
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import LikeButton from '../components/LikeButton';
@@ -59,7 +59,7 @@ const SinglePost = (props) => {
     const postId = props.match.params.postId;
     console.log(postId);
 
-    const [ comment, setComment ] = useState("");
+    const [comment, setComment] = useState("");
 
     const { loading, data } = useQuery(FETCH_POST_QUERY, {
         variables: {
@@ -126,7 +126,23 @@ const SinglePost = (props) => {
                         </Card>
                         {user && (
                             <Card fluid>
-
+                                <Form>
+                                    <div className="ui action input fluid">
+                                        <input
+                                            type="text"
+                                            placeholder="Comment..."
+                                            name="comment"
+                                            value={comment}
+                                            onChange={event => setComment(event.target.value)}
+                                        ></input>
+                                        <button
+                                            type="submit"
+                                            className="ui button orange"
+                                            disabled={comment.trim() === ""}
+                                            onClick={createComment}
+                                        >Submit</button>
+                                    </div>
+                                </Form>
                             </Card>
                         )}
                         {comments.map(comment => (
