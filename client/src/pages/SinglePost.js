@@ -4,6 +4,7 @@ import { Dimmer, Loader, Grid, Image, Card, Button, Icon, Label } from "semantic
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import LikeButton from '../components/LikeButton';
+import DeleteButton from '../components/DeleteButton';
 
 const FETCH_POST_QUERY = gql`
     query getPost($postId: ID!) {
@@ -82,6 +83,9 @@ const SinglePost = (props) => {
                                         {commentCount}
                                     </Label>
                                 </Button>
+                                {user && user.username === username && (
+                                    <DeleteButton postId={id}></DeleteButton>
+                                )}
                             </Card.Content>
                         </Card>
                     </Grid.Column>

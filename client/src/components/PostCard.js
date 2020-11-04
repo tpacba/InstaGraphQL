@@ -10,10 +10,6 @@ const PostCard = ({ post: { id, body, createdAt, username, comments, likes, like
 
     const { user } = useContext(AuthContext);
 
-    const deletePost = () => {
-        console.log("deletePost");
-    }
-
     return (
         <Card fluid>
             <Card.Content>
@@ -42,9 +38,6 @@ const PostCard = ({ post: { id, body, createdAt, username, comments, likes, like
                     </Label>
                 </Button>
                 {user && user.username === username && (
-                    // <Button as='div' floated='right' icon onClick={deletePost}>
-                    //     <Icon name='trash' />
-                    // </Button>
                     <DeleteButton postId={id}></DeleteButton>
                 )}
             </Card.Content>
