@@ -36,7 +36,7 @@ const SinglePost = (props) => {
 
     console.log(postId);
 
-    const { data: { getPost } } = useQuery(FETCH_POST_QUERY, {
+    const { loading, data } = useQuery(FETCH_POST_QUERY, {
         variables: {
             postId
         }
@@ -44,14 +44,17 @@ const SinglePost = (props) => {
 
     let postMarkup;
 
-    if (!getPost) {
+    console.log(data);
+
+    if (loading) {
         postMarkup = (
             <Dimmer active inverted>
                 <Loader inverted content='Loading' />
             </Dimmer>
         );
     } else {
-        const { id, body, createdAt, username, comments, likes, likeCount, commentCount } = getPost;
+        console.log(data.getPost)
+        const { id, body, createdAt, username, comments, likes, likeCount, commentCount } = data.getPost;
         postMarkup = (
             <Grid>
                 <Grid.Row>
@@ -87,11 +90,7 @@ const SinglePost = (props) => {
         );
     }
 
-    return (
-        <div>
-
-        </div>
-    );
+    return postMarkup;
 }
 
 export default SinglePost;
