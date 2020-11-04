@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/client";
-import { Grid, Container } from "semantic-ui-react";
+import { Grid, Container, Dimmer, Loader } from "semantic-ui-react";
 import PostCard from "../components/PostCard";
 import { AuthContext } from "../context/auth";
 import PostForm from "../components/PostForm";
@@ -25,7 +25,9 @@ const Home = () => {
                     </Grid.Column>
                 )}
                 {loading ? (
-                    <h1>Loading...</h1>
+                    <Dimmer active inverted>
+                        <Loader inverted content='Loading' />
+                    </Dimmer>
                 ) : (
                         data.getPosts &&
                         data.getPosts.map((post) => (
