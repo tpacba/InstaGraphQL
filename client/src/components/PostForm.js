@@ -56,7 +56,7 @@ function PostForm() {
             
             console.log(proxy)
             values.body = "";
-            window.location = "/";
+            window.location.reload(false);
         },
         variables: values
     });

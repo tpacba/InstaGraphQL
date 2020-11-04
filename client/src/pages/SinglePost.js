@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import React, { useContext, useState } from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { Dimmer, Loader, Grid, Image, Card, Button, Icon, Label } from "semantic-ui-react";
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
@@ -30,12 +30,36 @@ const FETCH_POST_QUERY = gql`
     }
 `
 
+const CREATE_COMMENT_MUTATION = gql`
+    mutation createComment($postId: ID!, $body: String!) {
+        createComment(postId: $postId, body: $body) {
+            id
+            body
+            createdAt
+            username
+            comments {
+                id
+                body
+                username
+                createdAt
+            }
+            likes {
+                id
+                username
+                createdAt
+            }
+            likeCount
+            commentCount
+        }
+    }
+`
+
 const SinglePost = (props) => {
     const { user } = useContext(AuthContext);
-
     const postId = props.match.params.postId;
-
     console.log(postId);
+
+    const [ comment, setComment ] = useState("");
 
     const { loading, data } = useQuery(FETCH_POST_QUERY, {
         variables: {
@@ -43,10 +67,22 @@ const SinglePost = (props) => {
         }
     })
 
+    const [createComment] = useMutation(CREATE_COMMENT_MUTATION, {
+        update() {
+            setComment("");
+        },
+        variables: {
+            postId,
+            body: comment
+        }
+    })
+
+    const deletePostCallback = () => {
+        window.location = "/";
+    }
+
     let postMarkup;
-
     console.log(data);
-
     if (loading) {
         postMarkup = (
             <Dimmer active inverted>
@@ -62,7 +98,7 @@ const SinglePost = (props) => {
                     <Grid.Column width={2}>
                         <Image
                             floated='right'
-                            size='mini'
+                            size='small'
                             src='https://react.semantic-ui.com/images/avatar/large/molly.png'
                         />
                     </Grid.Column>
@@ -84,10 +120,27 @@ const SinglePost = (props) => {
                                     </Label>
                                 </Button>
                                 {user && user.username === username && (
-                                    <DeleteButton postId={id}></DeleteButton>
+                                    <DeleteButton postId={id} callback={deletePostCallback}></DeleteButton>
                                 )}
                             </Card.Content>
                         </Card>
+                        {user && (
+                            <Card fluid>
+
+                            </Card>
+                        )}
+                        {comments.map(comment => (
+                            <Card fluid key={comment.id}>
+                                <Card.Content>
+                                    {user && user.username === comment.username && (
+                                        <DeleteButton postId={id} commentId={comment.id}></DeleteButton>
+                                    )}
+                                    <Card.Header>{comment.username}</Card.Header>
+                                    <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
+                                    <Card.Description>{comment.body}</Card.Description>
+                                </Card.Content>
+                            </Card>
+                        ))}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
