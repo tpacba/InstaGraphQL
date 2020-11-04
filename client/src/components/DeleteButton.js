@@ -28,12 +28,6 @@ const DeleteButton = ({ postId }) => {
                 newData
             })
 
-            // data.getPosts = data.getPosts.filter(post => post.id !== postId);
-            // proxy.writeQuery({
-            //     query: FETCH_POSTS_QUERY,
-            //     data
-            // })
-
             window.location = "/";
         },
         variables: {
