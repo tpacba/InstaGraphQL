@@ -99,7 +99,7 @@ const SinglePost = (props) => {
                         <Image
                             floated='right'
                             size='small'
-                            src='https://react.semantic-ui.com/images/avatar/large/molly.png'
+                            src='https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png'
                         />
                     </Grid.Column>
                     <Grid.Column width={10}>
