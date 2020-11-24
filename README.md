@@ -3,7 +3,7 @@
 ![license](https://img.shields.io/badge/license-ISC-red.svg)
 ![apollo](https://img.shields.io/badge/apollo-3.2.5-blue.svg)
 ![react](https://img.shields.io/badge/react-17.0.1-green.svg)
-![graphql](https://img.shields.io/badge/mysql-2.18.1-violet.svg)
+![graphql](https://img.shields.io/badge/graphql-2.18.1-violet.svg)
 
 ## Table of Contents
 
