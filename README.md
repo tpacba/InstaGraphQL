@@ -16,6 +16,9 @@
 
 InstaGraphQL is a basic social media app that uses MERNG stack (MongoDB, Express, React, Node, and GraphQL) with a Semantic UI design framework. Users can register and login to access POST, COMMENT, and LIKE functionalities with other users. The connection between React, GraphQL and the MongoDB database is managed by the state management library called [Apollo Client](https://www.apollographql.com/docs/react/). 
 
+## Development
+Future development would include media uploading using Apollo Server to create a fully-fledged social media app. Check out my other Github Repo "apollo-dragdrop" to see the progress.
+
 ## Installation
 
 Run `npm install` to install the following dependencies.
